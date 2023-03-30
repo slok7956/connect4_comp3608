@@ -1,9 +1,8 @@
-# need to complete evaluation, num_in_a_row, score unctions. then, implement minimax
-# using the evaluation function
+from functools import reduce
 
-# import time
-
-# start = time.time()
+# some_list = [[14], [215, 383, 87], [298], [374], [2,3,4,5,6,7]]
+# single_list = reduce(lambda x,y: x+y, some_list)
+# print(single_list)
 
 def connect_four_mm(contents, turn, max_depth):
     #TODO
@@ -36,31 +35,33 @@ def change_state(state, color, column):
     
 
 def recurse(state, turn, depth, max_depth=-1):
+    score = evaluation(state)
     recurse.counter += 1
-    print(recurse.counter)
     if depth == 0:
-        return evaluation(state)   
+        return score
+    if (score == 10000 and turn == "yellow") or (score == -10000 and turn == "red"):
+        return score
     
     fin_dict = {k:[] for k in range(0,7)}
     if turn == "red":
         next_turn = "yellow"
     if turn == "yellow":
         next_turn = "red"
+
     i = 0
     while i < 7:
         next_state, column = change_state(state, turn, i)
         fin_dict[i].append(recurse(next_state, next_turn, depth-1))
-        print(fin_dict)
         i = column
         i += 1
-    # print(fin_dict)
+
     if turn == "red":
         key = max(fin_dict, key=fin_dict.get)
     if turn == "yellow":
         key = min(fin_dict, key=fin_dict.get)
     if depth == max_depth:
         return key
-    return fin_dict[key]
+    return fin_dict[key][0]
     
 
 
@@ -151,8 +152,8 @@ def num_in_a_row(state):
 
 def evaluation(state):
     ls, winner = num_in_a_row(state)
-    # if winner != -1:
-    #     return utility(winner)
+    if winner != -1:
+        return utility(winner)
 
     total = 0
     keys = ["1","2","3","4 or more"]
@@ -170,4 +171,5 @@ def utility(winner):
 
 if __name__ == '__main__':
     # Example function call below, you can add your own to test the connect_four_mm function
-    print(connect_four_mm("..y.r..,..y.r..,..y.r..,.......,.......,.......", "red", 2))
+    print(connect_four_mm("..y.r..,..y.r..,..y.r..,.......,.......,.......", "red", 3))
+    pass

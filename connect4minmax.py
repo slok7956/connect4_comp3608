@@ -7,8 +7,9 @@
 
 def connect_four_mm(contents, turn, max_depth):
     #TODO
+    recurse.counter = 0
     result = recurse(contents,turn,max_depth,max_depth)
-    return result
+    return f"{result}\n{recurse.counter}"
 
 
 
@@ -35,6 +36,8 @@ def change_state(state, color, column):
     
 
 def recurse(state, turn, depth, max_depth=-1):
+    recurse.counter += 1
+    print(recurse.counter)
     if depth == 0:
         return evaluation(state)   
     
@@ -47,7 +50,7 @@ def recurse(state, turn, depth, max_depth=-1):
     while i < 7:
         next_state, column = change_state(state, turn, i)
         fin_dict[i].append(recurse(next_state, next_turn, depth-1))
-        # print(fin_dict)
+        print(fin_dict)
         i = column
         i += 1
     # print(fin_dict)
@@ -167,4 +170,4 @@ def utility(winner):
 
 if __name__ == '__main__':
     # Example function call below, you can add your own to test the connect_four_mm function
-    print(connect_four_mm(".ryyrry,.rryry.,..y.r..,..y....,.......,.......", "red", 4))
+    print(connect_four_mm("..y.r..,..y.r..,..y.r..,.......,.......,.......", "red", 2))

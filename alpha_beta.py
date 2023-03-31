@@ -75,9 +75,6 @@ def recurse(state, turn, depth, max_depth=-1):
     #ADDITION
     #extra condition: not worth pursuing
     if alpha_beta(turn,key):
-      
-      #both options pass 1, 6, 7, 8, 1h, 2h, and 4h
-      #return key
       depth = 0
 
     return fin_dict[key][0]

@@ -10,7 +10,7 @@ alpha = float('-inf')
 beta = float('inf')
     
 #main method
-def connect_four_mm(contents, turn, max_depth):
+def connect_four_ab(contents, turn, max_depth):
     #TODO
     
     recurse.counter = 0
@@ -73,9 +73,12 @@ def recurse(state, turn, depth, max_depth=-1):
         return key
     
     #ADDITION
-    #prune here? extra condition: not worth pursuing
+    #extra condition: not worth pursuing
     if alpha_beta(turn,key):
-        return key
+      
+      #both options pass 1, 6, 7, 8, 1h, 2h, and 4h
+      #return key
+      depth = 0
 
     return fin_dict[key][0]
     
@@ -95,7 +98,8 @@ def alpha_beta(t,k):
       if k < alpha: alpha = k
             
       #evaluate pruning
-      if k > beta: True
+      if k > beta: 
+        return True
       else: return False
       
   #min
@@ -104,8 +108,9 @@ def alpha_beta(t,k):
       if k < beta: beta = k
             
       #evaluate pruning
-      if k < alpha: return False
-      else: return True
+      if k < alpha: 
+        return True
+      else: return False
 
 # hori, verti, l_diag, r_diag
 # count number of color, and track amount of in a row in a dict
@@ -213,5 +218,5 @@ def utility(winner):
 
 if __name__ == '__main__':
     # Example function call below, you can add your own to test the connect_four_mm function
-    print(connect_four_mm("..y.r..,..y.r..,..y.r..,.......,.......,.......", "red", 3))
+    print(connect_four_ab("..y.r..,..y.r..,..y.r..,.......,.......,.......", "red", 3))
     pass

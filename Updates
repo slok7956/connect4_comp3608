@@ -1,0 +1,2 @@
+I packaged all the alpha-beta pruning into a function, so it should be compatible with new versions of the minimax program, 
+as long as it includes the global variable definitions, function definition, & function call.

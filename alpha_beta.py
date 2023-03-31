@@ -4,12 +4,18 @@ from functools import reduce
 # single_list = reduce(lambda x,y: x+y, some_list)
 # print(single_list)
 
+#main method
 def connect_four_mm(contents, turn, max_depth):
     #TODO
+    
+    #ADDITION
+    #create & initialize alpha & beta
+    alpha = float('-inf')
+    beta = float('inf')
+    
     recurse.counter = 0
     result = recurse(contents,turn,max_depth,max_depth)
     return f"{result}\n{recurse.counter}"
-
 
 
 def change_state(state, color, column):
@@ -37,8 +43,10 @@ def change_state(state, color, column):
 def recurse(state, turn, depth, max_depth=-1):
     score = evaluation(state)
     recurse.counter += 1
+    #max search depth
     if depth == 0:
         return score
+    #win therefore no further moves
     if (score == 10000 and turn == "yellow") or (score == -10000 and turn == "red"):
         return score
     
@@ -55,15 +63,48 @@ def recurse(state, turn, depth, max_depth=-1):
         i = column
         i += 1
 
+        
     if turn == "red":
         key = max(fin_dict, key=fin_dict.get)
     if turn == "yellow":
         key = min(fin_dict, key=fin_dict.get)
+    #max depth therefore pruning not applicable
     if depth == max_depth:
         return key
+    
+    #ADDITION
+    #prune here? extra condition: not worth pursuing
+    if alpha_beta(turn,key):
+        return key
+
     return fin_dict[key][0]
     
+#ADDITION
+#alpha-beta pruning using cutoffs
+#inputs: current turn t & evaluation value k
+#outputs:
+#   update alpha & beta global variables
+#   true if branch can be pruned, false if not
 
+def alpha_beta(t,k):
+    
+    #max
+    if t == "red":
+        #update alpha
+        if k < alpha: alpha = k
+            
+        #evaluate pruning
+        if k > beta: return True
+        else: return False
+      
+    #min
+    else:
+        #update beta
+        if k < beta: beta = k
+            
+        #evaluate pruning
+        if k < alpha: return False
+        else: return True
 
 # hori, verti, l_diag, r_diag
 # count number of color, and track amount of in a row in a dict
@@ -149,7 +190,7 @@ def num_in_a_row(state):
         i += 1
     return fin_ls,winner
 
-
+#given
 def evaluation(state):
     ls, winner = num_in_a_row(state)
     if winner != -1:
@@ -161,7 +202,7 @@ def evaluation(state):
         total += (ls[0][keys[i]] - ls[1][keys[i]])*(10**i)
     return total
 
-
+#given
 def utility(winner):
     if winner == 0:
         return 10000

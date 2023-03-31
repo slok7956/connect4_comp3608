@@ -4,14 +4,14 @@ from functools import reduce
 # single_list = reduce(lambda x,y: x+y, some_list)
 # print(single_list)
 
+#ADDITION
+#create & initialize alpha & beta as global variables
+alpha = float('-inf')
+beta = float('inf')
+    
 #main method
 def connect_four_mm(contents, turn, max_depth):
     #TODO
-    
-    #ADDITION
-    #create & initialize alpha & beta
-    alpha = float('-inf')
-    beta = float('inf')
     
     recurse.counter = 0
     result = recurse(contents,turn,max_depth,max_depth)

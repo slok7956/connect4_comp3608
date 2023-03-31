@@ -1,2 +1,7 @@
 I packaged all the alpha-beta pruning into a function, so it should be compatible with new versions of the minimax program, 
 as long as it includes the global variable definitions, function definition, & function call.
+Consistenly passing 7 tests, expanding too many nodes
+
+Current version on Grok is not backed up to Github. Still consistently passing the same 7 tests, is now both over-expanding
+and under-expanding branches. Reason probably issue with tracking alpha & beta values within a path & not including values
+from previous paths: next step storing alpha & beta variables with current path

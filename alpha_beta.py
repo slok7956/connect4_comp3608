@@ -11,7 +11,6 @@ beta = float('inf')
     
 #main method
 def connect_four_ab(contents, turn, max_depth):
-    #TODO
     
     recurse.counter = 0
     result = recurse(contents,turn,max_depth,max_depth)
@@ -37,17 +36,17 @@ def change_state(state, color, column):
     rows[i] = rows[i][:j] + change + rows[i][j+1:]
     new_state = ",".join(rows)
     return new_state, j
- 
-    
 
 def recurse(state, turn, depth, max_depth=-1):
+    
     score = evaluation(state)
     recurse.counter += 1
-    #max search depth
+    
     if depth == 0:
         return score
-    #win therefore no further moves
     if (score == 10000 and turn == "yellow") or (score == -10000 and turn == "red"):
+        return score
+    if alpha_beta(turn,score):
         return score
     
     fin_dict = {k:[] for k in range(0,7)}
@@ -58,24 +57,17 @@ def recurse(state, turn, depth, max_depth=-1):
 
     i = 0
     while i < 7:
-        next_state, column = change_state(state, turn, i)
-        fin_dict[i].append(recurse(next_state, next_turn, depth-1))
-        i = column
-        i += 1
-
-        
+      next_state, column = change_state(state, turn, i)
+      fin_dict[i].append(recurse(next_state, next_turn, depth-1))
+      i = column
+      i += 1
+      
     if turn == "red":
         key = max(fin_dict, key=fin_dict.get)
     if turn == "yellow":
         key = min(fin_dict, key=fin_dict.get)
-    #max depth therefore pruning not applicable
     if depth == max_depth:
         return key
-    
-    #ADDITION
-    #extra condition: not worth pursuing
-    if alpha_beta(turn,key):
-      depth = 0
 
     return fin_dict[key][0]
     
@@ -88,26 +80,30 @@ def recurse(state, turn, depth, max_depth=-1):
 
 def alpha_beta(t,k):
   global alpha,beta
+  prune = False
     
   #max
   if t == "red":
       #update alpha
-      if k < alpha: alpha = k
-            
+      if k > alpha: 
+        alpha = k
+        
       #evaluate pruning
       if k > beta: 
-        return True
-      else: return False
+        prune = True
       
   #min
   else:
       #update beta
-      if k < beta: beta = k
-            
+      if k < beta: 
+        beta = k     
+      
       #evaluate pruning
       if k < alpha: 
-        return True
-      else: return False
+        prune = True
+   
+  return prune
+        
 
 # hori, verti, l_diag, r_diag
 # count number of color, and track amount of in a row in a dict

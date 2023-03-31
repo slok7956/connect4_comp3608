@@ -87,24 +87,25 @@ def recurse(state, turn, depth, max_depth=-1):
 #   true if branch can be pruned, false if not
 
 def alpha_beta(t,k):
+  global alpha,beta
     
-    #max
-    if t == "red":
-        #update alpha
-        if k < alpha: alpha = k
+  #max
+  if t == "red":
+      #update alpha
+      if k < alpha: alpha = k
             
-        #evaluate pruning
-        if k > beta: return True
-        else: return False
+      #evaluate pruning
+      if k > beta: True
+      else: return False
       
-    #min
-    else:
-        #update beta
-        if k < beta: beta = k
+  #min
+  else:
+      #update beta
+      if k < beta: beta = k
             
-        #evaluate pruning
-        if k < alpha: return False
-        else: return True
+      #evaluate pruning
+      if k < alpha: return False
+      else: return True
 
 # hori, verti, l_diag, r_diag
 # count number of color, and track amount of in a row in a dict

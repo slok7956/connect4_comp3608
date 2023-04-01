@@ -1,0 +1,23 @@
+Handling timeouts:
+Use iterative-depth style search: call connect_four_ab on loop, increasing the max depth and overwriting the last result until the end of the turn
+
+  Using threading to send an interrupt (https://docs.python.org/2/library/threading.html#event-objects)
+  Check whether a flat amount of time (eg 0.1 seconds) remains before starting another iteration; if not, return current value
+  
+As-is functions
+Use without edits
+  num_in_a_row
+  utility
+  change_state
+  a_b_update
+  prune
+  connect_four_ab
+  
+Possible edits
+  recurse
+  Replace manual loop (i 1-7) with a dictionary
+  Threading: when expanding a new node, give the call to recurse() to a new thread
+  
+  evaluation
+  Change weighting: increase weighting based on how many in a row (4 or more highest, 1 lowest)
+                    increase weighting for MAX relative to MIN

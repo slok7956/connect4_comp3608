@@ -17,3 +17,8 @@
         #advance column
         #i = column
         i += 1
+
+        
+        DICTIONARY THING
+        next_level={}
+    next_level.update({k:change_state(state,turn, for k in range(0,7)} 
